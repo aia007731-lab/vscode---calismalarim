@@ -1,8 +1,18 @@
 import random
 
-print("TAŞ-KAĞIT-MAKAS OYUNU")
-# ANA DÖNGÜ - Tekrar oyna özelliği
+# İSTATİSTİKLER -Oyun başında
+toplam_oyun = 0
+toplam_galibiyet = 0
+secim_sayaci = {"taş": 0, "kağıt": 0, "makas": 0}
+
 while True:
+    # İstatistik gösterimi
+    print(f"\nToplam oyun: {toplam_oyun} | ", end=""
+    if toplam_oyun > 0:
+        print(f"Kazanma: %{toplam_galibiyet/toplam_oyun*100:.1f}")
+    else:
+        print("İlk oyununuz!")
+
     print("\n3 raund oynayalım!")
 
     secenekler = ["taş", "kağıt", "makas"]
@@ -13,10 +23,11 @@ while True:
     for raund in range(1, 4):
         print(f"\n{raund}. Raund:")
         
-        # Oyuncu seçimi - geçerli mi?
+        # Oyuncu seçimi + istatistik
         while True:
             secim = input("Seçimin (taş/kağıt/makas): ").lower()
             if secim in secenekler:
+                secim_sayaci[secim] += 1 # İstatistik için
                 break
             print("Geçersiz! Tekrar dene.")
     
@@ -36,22 +47,30 @@ while True:
             print("Bilgisayar kazandı!")
             bilgisayar_skor += 1
 
-            # Final sonuç
-    print(f"\n🏁 SONUÇ: Sen {oyuncu_skor} - Bilgisayar {bilgisayar_skor}")
+    # Sonuç + istatistik güncelleme
+    toplam_oyun += 1
     if oyuncu_skor > bilgisayar_skor:
-        print("Tebrikler! Oyunu sen kazandın!")
+        toplam_galibiyet += 1
+        print("Kazandın!")
     elif oyuncu_skor < bilgisayar_skor:
-        print("Bilgisayar kazandı!")
+        print("Kaybettin!")
     else:
-        print("Berabere bitti!")
+        print("Berabere!")
+
+    # En çok kullanılan seçim
+    en_cok = max(secim_sayaci, key=secim_sayaci.get)
+    print(f"En çok kullandığınız: {en_cok} ({secim_sayaci[en_cok]} kez)")
 
     # Tekrar oyna döngüsü
     while True:
         devam = input("\nTekrar oynamak ister misin? (e/h): ").lower()
         if devam == 'e':
-            break  # İç döngüden çık, dış döngü devam etsin
+            break  
         elif devam == 'h':
             print("Güle güle! Yine bekleriz.")
+            print(f"Toplam oyun: {toplam_oyun}")
+            print(f"Galibiyet: {toplam_galibiyet}")
+            print(f"Kazanma oranı: %{toplam_galibiyet/toplam_oyun*100:.1f}")
             exit()  # Programdan çık
         else:
             print("Lütfen 'e' veya 'h' yaz!")
