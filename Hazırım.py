@@ -1,0 +1,5 @@
+print(":smile:Hazırım")
+print("Git: çalışıyor")
+print("VS Code: çalışıyor")
+print("Linux Mint: çalışıyor")
+print("Ben: çalışıyorum")
